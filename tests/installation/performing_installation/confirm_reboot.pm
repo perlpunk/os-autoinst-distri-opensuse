@@ -10,8 +10,10 @@
 use base 'y2_installbase';
 use strict;
 use warnings;
+use testapi;
 
 sub run {
+    eject_cd();
     $testapi::distri->get_performing_installation()->confirm_reboot();
 }
 
