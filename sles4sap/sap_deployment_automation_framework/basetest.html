@@ -15,6 +15,8 @@
   <li><a href="#SYNOPSIS">SYNOPSIS</a>
     <ul>
       <li><a href="#full_cleanup">full_cleanup</a></li>
+      <li><a href="#sdaf_ibsm_teardown">sdaf_ibsm_teardown</a></li>
+      <li><a href="#sdaf_ibsm_data_collect">sdaf_ibsm_data_collect</a></li>
     </ul>
   </li>
 </ul><h1>lib/sles4sap/sap_deployment_automation_framework/basetest.pm</h1>
@@ -27,7 +29,34 @@
 
 <pre><code>full_cleanup();</code></pre>
 
-<p>Function performs full SDAF cleanup. First, it checks which stages of deployment are applied to avoid executing unnecessary cleanup commands. Cleanup is done in following order: - execute SDAF remover script - destroys existing sap-systems and workload zone deployments - destroy deployer VM and related resources like OS disk, NIC, Security group, etc. - keeps control plane intact (Control plane must not be deleted)</p>
+<p>Function performs full SDAF cleanup. First, it checks which stages of deployment are applied to avoid executing unnecessary cleanup commands. Cleanup is done in following order:</p>
+
+<ul>
+
+<li><p>executes SDAF remover script - destroys existing sap-systems and workload zone deployments</p>
+
+</li>
+<li><p>destroys deployer VM and related resources like OS disk, NIC, Security group, etc.</p>
+
+</li>
+<li><p>keeps control plane intact (Control plane must not be deleted)</p>
+
+</li>
+</ul>
+
+<h2 id="sdaf_ibsm_teardown">sdaf_ibsm_teardown</h2>
+
+<pre><code>sdaf_ibsm_teardown();</code></pre>
+
+<p>All existing peerings are deleted in 3 attempts. Function does not croak/die. Only reports about failure and lets other cleanup procedures to continue.</p>
+
+<h2 id="sdaf_ibsm_data_collect">sdaf_ibsm_data_collect</h2>
+
+<pre><code>sdaf_ibsm_data_collect();</code></pre>
+
+<p>Collects information about existing network peerings between <b>IBSM mirror VNET</b> and <b>test workload zone VNET</b>. Returns <b>HASHREF</b> with all data collected in following format:</p>
+
+<p>{ peering_type = { peering_name =&gt; &#39;peering_name&#39;, source_resource_group =&gt; &#39;source_resource_group_name&#39;, target_resource_group =&gt; &#39;target_resource_group_name&#39;, source_vnet =&gt; &#39;source_vnet_game&#39;, target_vnet =&gt; &#39;target_vnet_game&#39;, exists =&gt; &#39;&lt;0/1&gt;&#39; } }</p>
 
 
 </body>
